@@ -1,0 +1,6 @@
+{
+  "name": "Heaven Autos - Premium Car Accessories & PPF Studio Pakistan",
+  "description": "Pakistan's #1 car accessories platform and certified PPF detailing studio. Precision fitment 7D/10D floor mats, QuikSlide magnetic shades, Bi-LED lights, Android panels, and studio PPF packages with nationwide express delivery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
