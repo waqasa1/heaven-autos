@@ -40,7 +40,7 @@ export function StoreShell({ children, activeCategory = "" }) {
         }
         activeCategory={activeCategory}
       />
-      <main className="w-full pt-28 bg-white min-h-screen flex-1">{children}</main>
+      <main className="w-full bg-white min-h-screen flex-1">{children}</main>
       <Footer
         onSelectCarMake={(makeId) =>
           router.push(makeId ? `/shop?make=${makeId}` : "/shop")

@@ -2,7 +2,7 @@ import { PPF_PACKAGES } from "../data/mockData";
 export const PPFStudioSection = ({ onOpenBookingModal }) => {
   return (
     <section
-      className="py-16 px-4 sm:px-8 bg-white border-b border-slate-200"
+      className="pt-4 pb-12 px-4 sm:px-8 bg-white border-b border-slate-200"
       id="ppf-studio"
     >
       <div className="max-w-[1360px] mx-auto">
@@ -18,7 +18,7 @@ export const PPFStudioSection = ({ onOpenBookingModal }) => {
             <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
               Certified PPF &amp; Precision Detailing Studio
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base mt-2.5 leading-relaxed">
+            <p className="text-slate-950 font-normal text-sm sm:text-base mt-2.5 leading-relaxed">
               Protect your multi-million rupee investment against rock chips,
               harsh desert UV radiation, and acidic rain. Installed in dust-free
               specialized cleanrooms in Lahore and Multan by factory-certified

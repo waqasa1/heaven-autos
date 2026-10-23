@@ -14,34 +14,32 @@ export const Header = ({
   onOpenVehicleModal,
   onOpenCart,
   onOpenWishlist,
-  onOpenTracking,
   onSelectCategory,
   activeCategory,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
-      {/* Top Banner Bar */}
-      <div className="bg-slate-50 border-b border-slate-200 text-slate-600 py-1.5 px-4 sm:px-8">
-        <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between text-xs font-medium">
+    <>
+      <div className="bg-slate-50 border-b border-slate-200 text-slate-950 py-1.5 px-4 sm:px-8">
+        <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between text-xs font-normal">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-slate-900 font-medium">
+            <span className="flex items-center gap-1.5">
               <span className="material-symbols-outlined text-[16px] text-sky-600">
                 local_shipping
               </span>
               Nationwide Express Delivery across Pakistan
             </span>
             <span className="hidden lg:inline text-slate-300">|</span>
-            <span className="hidden lg:flex items-center gap-1.5 text-emerald-600 font-semibold">
+            <span className="hidden lg:flex items-center gap-1.5 font-medium text-emerald-700">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
-              100% Genuine Fitment Guaranteed
+              Advance payment confirms every order
             </span>
           </div>
           <div className="flex items-center gap-6 mt-1 md:mt-0">
             <a
-              className="flex items-center gap-1.5 text-[#25D366] hover:underline font-bold"
+              className="flex items-center gap-1.5 text-[#25D366] hover:underline font-semibold"
               href="https://wa.me/923001234567?text=Hi%20Heaven%20Autos%20I%20need%20assistance%20with%20car%20accessories"
               target="_blank"
               rel="noopener noreferrer"
@@ -51,7 +49,7 @@ export const Header = ({
               </span>
               Order via WhatsApp: +92 300 1234567
             </a>
-            <div className="hidden sm:flex items-center gap-3 text-slate-500">
+            <div className="hidden sm:flex items-center gap-3">
               <span className="flex items-center gap-1">
                 <span className="material-symbols-outlined text-[15px]">
                   schedule
@@ -62,14 +60,15 @@ export const Header = ({
           </div>
         </div>
       </div>
+      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
 
       {/* Main Bar */}
       <div className="h-20 max-w-[1360px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         {/* Logo & Vehicle Selector Trigger */}
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="#" className="flex items-center group">
+          <Link href="/" className="flex items-center group">
             <BrandLogo />
-          </a>
+          </Link>
 
           {/* Vehicle Selector Badge / Trigger */}
           <button
@@ -223,16 +222,19 @@ export const Header = ({
       {/* Desktop Categories Sub-Navigation */}
       <div className="bg-white border-t border-slate-200 px-4 sm:px-8 hidden md:block">
         <div className="max-w-[1360px] mx-auto">
-          <nav className="flex items-center gap-6 overflow-x-auto py-2 text-xs font-bold text-slate-700">
-            <button
-              onClick={onOpenVehicleModal}
-              className="text-sky-600 font-extrabold whitespace-nowrap flex items-center gap-1 hover:text-sky-700 cursor-pointer"
+          <nav className="flex w-full items-center justify-between py-3 text-sm font-semibold text-slate-950">
+            <Link href="/" className="whitespace-nowrap hover:text-sky-600">
+              Home
+            </Link>
+            <Link
+              href="/shop-by-car"
+              className="text-sky-600 font-extrabold whitespace-nowrap flex items-center gap-1 hover:text-sky-700"
             >
               <span className="material-symbols-outlined text-[16px]">
                 garage
               </span>
               Shop by Car
-            </button>
+            </Link>
             <button
               onClick={() => onSelectCategory("all")}
               className={`whitespace-nowrap transition-colors cursor-pointer ${activeCategory === "all" ? "text-sky-600 font-bold" : "hover:text-sky-600"}`}
@@ -243,44 +245,38 @@ export const Header = ({
               onClick={() => onSelectCategory("exterior")}
               className={`whitespace-nowrap transition-colors cursor-pointer ${activeCategory === "exterior" ? "text-sky-600 font-bold" : "hover:text-sky-600"}`}
             >
-              Exterior (Bodykits &amp; Visors)
+              Exterior
             </button>
             <button
               onClick={() => onSelectCategory("shades-mats")}
               className={`whitespace-nowrap transition-colors cursor-pointer ${activeCategory === "shades-mats" ? "text-sky-600 font-bold" : "hover:text-sky-600"}`}
             >
-              Interior (7D/10D Mats &amp; Sun Shades)
+              Interior
             </button>
             <button
               onClick={() => onSelectCategory("led-tech")}
               className={`whitespace-nowrap transition-colors cursor-pointer ${activeCategory === "led-tech" ? "text-sky-600 font-bold" : "hover:text-sky-600"}`}
             >
-              Electronics &amp; Bi-LED Lights
+              Electronics
             </button>
             <button
               onClick={() => onSelectCategory("detailing")}
               className={`whitespace-nowrap transition-colors cursor-pointer ${activeCategory === "detailing" ? "text-sky-600 font-bold" : "hover:text-sky-600"}`}
             >
-              Car Care &amp; Chemicals
+              Car Care
             </button>
             <Link
               href="/ppf"
-              className="text-amber-600 hover:text-amber-700 transition-colors whitespace-nowrap flex items-center gap-1 font-bold"
+              className="text-amber-600 hover:text-amber-700 transition-colors whitespace-nowrap font-bold"
             >
-              <span className="material-symbols-outlined text-[16px]">
-                shield
-              </span>
-              Services (PPF &amp; Detailing)
+              Services
             </Link>
-            <button
-              onClick={onOpenTracking}
-              className="text-slate-600 hover:text-sky-600 transition-colors whitespace-nowrap ml-auto font-medium flex items-center gap-1"
-            >
-              <span className="material-symbols-outlined text-[16px]">
-                local_shipping
-              </span>
-              Track Your Order
-            </button>
+            <Link href="/contact" className="whitespace-nowrap hover:text-sky-600">
+              Contact
+            </Link>
+            <Link href="/about" className="whitespace-nowrap hover:text-sky-600">
+              About
+            </Link>
           </nav>
         </div>
       </div>
@@ -316,7 +312,7 @@ export const Header = ({
             }}
             className="text-left py-2 px-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded"
           >
-            Sun Shades &amp; 10D Floor Mats
+            Interior
           </button>
           <button
             onClick={() => {
@@ -325,7 +321,7 @@ export const Header = ({
             }}
             className="text-left py-2 px-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded"
           >
-            Bi-LED Projectors &amp; Android Panels
+            Electronics
           </button>
           <button
             onClick={() => {
@@ -334,7 +330,7 @@ export const Header = ({
             }}
             className="text-left py-2 px-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded"
           >
-            Exterior Bodykits &amp; Visors
+            Exterior
           </button>
           <button
             onClick={() => {
@@ -343,32 +339,18 @@ export const Header = ({
             }}
             className="text-left py-2 px-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded"
           >
-            Car Care &amp; Microfiber Covers
+            Car Care
           </button>
           <Link
             href="/ppf"
             onClick={() => setMobileMenuOpen(false)}
-            className="text-left py-2 px-2 text-sm font-bold text-amber-600 hover:bg-amber-50 rounded flex items-center gap-2"
+            className="text-left py-2 px-2 text-sm font-bold text-amber-600 hover:bg-amber-50 rounded"
           >
-            <span className="material-symbols-outlined text-[18px]">
-              shield
-            </span>
-            PPF &amp; Detailing Studio
+            Services
           </Link>
-          <button
-            onClick={() => {
-              onOpenTracking();
-              setMobileMenuOpen(false);
-            }}
-            className="text-left py-2 px-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 rounded flex items-center gap-2 border-t border-slate-100 mt-1 pt-2"
-          >
-            <span className="material-symbols-outlined text-[18px] text-sky-600">
-              local_shipping
-            </span>
-            Track Your Order
-          </button>
         </div>
       )}
     </header>
+    </>
   );
 };

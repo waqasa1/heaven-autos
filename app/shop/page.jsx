@@ -33,7 +33,7 @@ export default async function ShopPage({ searchParams }) {
 
   return (
     <StoreShell activeCategory={params.category || "all"}>
-      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8">
+      <section className="max-w-[1360px] mx-auto px-4 sm:px-8 pt-4 pb-8">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600">
           Catalog
         </p>

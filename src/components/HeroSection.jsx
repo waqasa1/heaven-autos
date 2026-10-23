@@ -36,7 +36,7 @@ export const HeroSection = ({ onShopNowClick, onPpfClick }) => {
       </section>
 
       {/* Light Asad Autos Style Hero Section */}
-      <section className="relative bg-white text-slate-900 overflow-hidden pt-8 pb-12 border-b border-slate-200">
+      <section className="relative bg-white text-slate-950 overflow-hidden pt-4 pb-10 border-b border-slate-200">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Column: Copy & Asad Style CTA */}
@@ -52,7 +52,7 @@ export const HeroSection = ({ onShopNowClick, onPpfClick }) => {
               <h1 className="font-headline text-[38px] sm:text-[46px] md:text-[54px] lg:text-[56px] font-extrabold text-slate-950 tracking-tight leading-[1.08] mb-4">
                 Premium Car Accessories in Pakistan
               </h1>
-              <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+              <p className="text-slate-950 font-normal text-sm sm:text-base md:text-lg leading-relaxed mb-8 max-w-xl">
                 Heaven Autos offers quality car accessories in Pakistan,
                 including floor mats, seat covers, Android panels, and LED
                 lights, along with expert car detailing and Paint Protection

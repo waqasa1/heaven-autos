@@ -10,6 +10,8 @@
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    color: #0a0a0a;
+    font-weight: 400;
     font-family:
       var(--font-plus-jakarta),
       -apple-system,
@@ -18,10 +20,62 @@
       Roboto,
       sans-serif;
   }
+
+  p,
+  li {
+    color: #0a0a0a;
+    font-weight: 400;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #0a0a0a;
+    font-weight: 800;
+  }
+}
+
+@keyframes heaven-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.heaven-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: heaven-marquee 40s linear infinite;
+}
+
+.heaven-marquee-line {
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heaven-marquee-track {
+    animation: none;
+  }
 }
 
 .font-headline {
   font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 800;
+  color: #0a0a0a;
+}
+
+p.text-slate-500,
+p.text-slate-600,
+li.text-slate-500,
+li.text-slate-600,
+span.text-slate-500,
+span.text-slate-600 {
+  color: #0a0a0a;
+  font-weight: 400;
 }
 
 .material-symbols-outlined {

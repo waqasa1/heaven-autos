@@ -33,17 +33,35 @@ function LoginForm() {
       return;
     }
     const next =
-      data.user.role === "admin" && redirect === "/account" ? "/admin" : redirect;
+      data.user.role === "admin" && redirect === "/account"
+        ? "/admin"
+        : redirect;
     router.refresh();
     router.push(next);
   };
 
   return (
     <form onSubmit={submit} className="mt-6 space-y-4">
-      <input name="email" type="email" required placeholder="Email" className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm" />
-      <input name="password" type="password" required placeholder="Password" className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm" />
+      <input
+        name="email"
+        type="email"
+        required
+        placeholder="Email"
+        className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+      />
+      <input
+        name="password"
+        type="password"
+        required
+        placeholder="Password"
+        className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
+      />
       {error && <p className="text-sm font-medium text-rose-600">{error}</p>}
-      <button type="submit" disabled={loading} className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl">
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl"
+      >
         {loading ? "Signing in..." : "Sign in"}
       </button>
       <p className="text-sm text-slate-500">
@@ -52,9 +70,9 @@ function LoginForm() {
           Create an account
         </Link>
       </p>
-      <p className="rounded-xl bg-slate-50 border border-slate-200 p-3 text-xs text-slate-600">
+      {/*<p className="rounded-xl bg-slate-50 border border-slate-200 p-3 text-xs text-slate-600">
         Demo admin: {DEMO_EMAIL} / {DEMO_PASSWORD}
-      </p>
+      </p>*/}
     </form>
   );
 }

@@ -12,6 +12,15 @@ import { PPFStudioSection } from "./components/PPFStudioSection";
 import { ReviewsSection } from "./components/ReviewsSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
+import {
+  BrandRow,
+  FuelPrices,
+  HotCategories,
+  Marquee,
+  ModelCollections,
+  VisitStrip,
+  WhyChoose,
+} from "./components/home/StorefrontSections";
 import { ProductDetailModal } from "./components/ProductDetailModal";
 import { CartDrawer } from "./components/CartDrawer";
 import { CheckoutModal } from "./components/CheckoutModal";
@@ -141,18 +150,18 @@ export default function App() {
       />
 
       {/* Main Content (padded for fixed header) */}
-      <main className="w-full pt-28 bg-white min-h-screen flex-1">
+      <main className="w-full bg-white min-h-screen flex-1">
         {/* Hero Section */}
         <HeroSection
-          onShopNowClick={() => {
-            const el = document.getElementById("featured-products");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }}
+          onShopNowClick={() => router.push("/shop")}
           onPpfClick={() => {
             const el = document.getElementById("ppf-studio");
             if (el) el.scrollIntoView({ behavior: "smooth" });
           }}
         />
+
+        <BrandRow />
+        <Marquee />
 
         {/* Vehicle Fitment Bar */}
         <VehicleFitmentBar
@@ -191,14 +200,21 @@ export default function App() {
           wishlistIds={cart.wishlistIds}
         />
 
+        <HotCategories />
+        <ModelCollections />
+
         {/* PPF & Detailing Studio Section */}
         <PPFStudioSection onOpenBookingModal={handleOpenBooking} />
 
+        <WhyChoose />
+
         {/* Real Customer Proof & Testimonials */}
         <ReviewsSection />
+        <FuelPrices />
 
         {/* FAQ & Technical Buying Guide */}
         <FaqSection onTagClick={handleTagClick} />
+        <VisitStrip />
       </main>
 
       {/* Global Footer */}
