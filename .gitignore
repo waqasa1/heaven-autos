@@ -9,3 +9,8 @@ coverage/
 *.log
 .env*
 !.env.example
+# Copies made without the leading dot were committed once. Never track them.
+env.local
+env.production
+env.example
+data/store.json

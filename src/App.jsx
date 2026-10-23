@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Header } from "./components/Header";
 import { HeroSection } from "./components/HeroSection";
 import { VehicleFitmentBar } from "./components/VehicleFitmentBar";
@@ -18,14 +19,10 @@ import { PPFBookingModal } from "./components/PPFBookingModal";
 import { OrderTrackingModal } from "./components/OrderTrackingModal";
 import { WishlistDrawer } from "./components/WishlistDrawer";
 import { PRODUCTS, VEHICLE_DATABASE } from "./data/mockData";
+import { useCart } from "./components/store/CartProvider";
 export default function App() {
-  // Initial cart with 3 items matching the mockup header badge "3"
-  const [cartItems, setCartItems] = useState([
-    { product: PRODUCTS[0], quantity: 1 },
-    { product: PRODUCTS[1], quantity: 1 },
-    { product: PRODUCTS[4], quantity: 1 },
-  ]);
-  const [wishlistIds, setWishlistIds] = useState(["prod-biled-fog-lights"]);
+  const router = useRouter();
+  const cart = useCart();
   const [activeVehicle, setActiveVehicle] = useState({
     make: "suzuki",
     model: "alto",
@@ -91,91 +88,22 @@ export default function App() {
   }, [activeCategory, searchQuery, selectedCarMake, activeVehicle]);
   // Wishlist products
   const wishlistProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => wishlistIds.includes(p.id));
-  }, [wishlistIds]);
-  // Cart operations
+    return PRODUCTS.filter((p) => cart.wishlistIds.includes(p.id));
+  }, [cart.wishlistIds]);
   const handleAddToCart = (product, quantity = 1) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item,
-        );
-      }
-      return [
-        ...prev,
-        { product, quantity, selectedVehicle: activeVehicle || undefined },
-      ];
-    });
-    showToast(
-      `Added ${quantity}x "${product.name.slice(0, 32)}..." to your cart!`,
-    );
+    cart.addItem(product, quantity, activeVehicle || undefined);
   };
-  const handleUpdateQuantity = (productId, newQty) => {
-    if (newQty <= 0) {
-      handleRemoveFromCart(productId);
-      return;
-    }
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity: newQty } : item,
-      ),
-    );
-  };
-  const handleRemoveFromCart = (productId) => {
-    setCartItems((prev) =>
-      prev.filter((item) => item.product.id !== productId),
-    );
-    showToast("Item removed from cart");
-  };
-  // Wishlist toggle
   const handleToggleWishlist = (product) => {
-    setWishlistIds((prev) => {
-      if (prev.includes(product.id)) {
-        showToast("Removed from wishlist");
-        return prev.filter((id) => id !== product.id);
-      } else {
-        showToast("Saved to wishlist ❤️");
-        return [...prev, product.id];
-      }
-    });
+    cart.toggleWishlist(product);
   };
-  // Category select
   const handleSelectCategory = (cat) => {
-    setActiveCategory(cat);
-    const sec = document.getElementById("featured-products");
-    if (sec) {
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
+    router.push(cat && cat !== "all" ? `/shop?category=${cat}` : "/shop");
   };
-  // Car make grid select
   const handleSelectMake = (makeId) => {
-    setSelectedCarMake(makeId);
-    if (makeId) {
-      setActiveVehicle({
-        make: makeId,
-        model: VEHICLE_DATABASE[makeId]?.models[0]?.id || "all",
-        year: "2022-2026",
-      });
-      showToast(`Filtered parts compatible with ${makeId.toUpperCase()}`);
-    } else {
-      setActiveVehicle(null);
-      showToast("Showing parts for all manufacturers");
-    }
-    const sec = document.getElementById("featured-products");
-    if (sec) {
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
+    router.push(makeId ? `/shop?make=${makeId}` : "/shop");
   };
-  // SEO tag click
   const handleTagClick = (tag) => {
-    setSearchQuery(tag.split(" ")[0]);
-    const sec = document.getElementById("featured-products");
-    if (sec) {
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
+    router.push(`/shop?q=${encodeURIComponent(tag)}`);
   };
   // Studio booking open
   const handleOpenBooking = (pkgTitle) => {
@@ -196,15 +124,18 @@ export default function App() {
 
       {/* Main Navigation Header */}
       <Header
-        cartCount={cartItems.reduce((acc, it) => acc + it.quantity, 0)}
-        wishlistCount={wishlistIds.length}
+        cartCount={cart.count}
+        wishlistCount={cart.wishlistIds.length}
         activeVehicle={activeVehicle}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        onSearchSubmit={(query) =>
+          router.push(query ? `/shop?q=${encodeURIComponent(query)}` : "/shop")
+        }
         onOpenVehicleModal={() => setIsVehicleModalOpen(true)}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenTracking={() => setIsTrackingOpen(true)}
+        onOpenTracking={() => router.push("/track-order")}
         onSelectCategory={handleSelectCategory}
         activeCategory={activeCategory}
       />
@@ -227,10 +158,14 @@ export default function App() {
         <VehicleFitmentBar
           activeVehicle={activeVehicle}
           onApplyVehicleFilter={(filter) => {
-            setActiveVehicle(filter);
-            if (filter) {
-              setSelectedCarMake(filter.make);
+            if (!filter) {
+              router.push("/shop");
+              return;
             }
+            const params = new URLSearchParams();
+            if (filter.make) params.set("make", filter.make);
+            if (filter.model) params.set("model", filter.model);
+            router.push(`/shop?${params.toString()}`);
           }}
           matchingCount={filteredProducts.length}
         />
@@ -253,7 +188,7 @@ export default function App() {
           onAddToCart={handleAddToCart}
           onOpenQuickView={setQuickViewProduct}
           onToggleWishlist={handleToggleWishlist}
-          wishlistIds={wishlistIds}
+          wishlistIds={cart.wishlistIds}
         />
 
         {/* PPF & Detailing Studio Section */}
@@ -269,7 +204,7 @@ export default function App() {
       {/* Global Footer */}
       <Footer
         onSelectCarMake={handleSelectMake}
-        onOpenTracking={() => setIsTrackingOpen(true)}
+        onOpenTracking={() => router.push("/track-order")}
       />
 
       {/* Quick View Modal */}
@@ -284,12 +219,12 @@ export default function App() {
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveCartItem}
+        items={cart.items}
+        onUpdateQuantity={cart.updateQuantity}
+        onRemoveItem={cart.removeItem}
         onProceedToCheckout={() => {
           setIsCartOpen(false);
-          setIsCheckoutOpen(true);
+          router.push("/checkout");
         }}
       />
 
@@ -297,9 +232,9 @@ export default function App() {
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
-        items={cartItems}
+        items={cart.items}
         onOrderCompleted={() => {
-          setCartItems([]);
+          cart.clear();
           showToast(
             "Order confirmed! Our dispatch officer will contact you shortly.",
           );
@@ -324,10 +259,7 @@ export default function App() {
         isOpen={isWishlistOpen}
         onClose={() => setIsWishlistOpen(false)}
         wishlistProducts={wishlistProducts}
-        onRemoveFromWishlist={(id) => {
-          setWishlistIds((prev) => prev.filter((item) => item !== id));
-          showToast("Removed from wishlist");
-        }}
+        onRemoveFromWishlist={(id) => cart.removeWishlist(id)}
         onAddToCart={handleAddToCart}
       />
 
@@ -412,6 +344,6 @@ export default function App() {
     </div>
   );
   function handleRemoveCartItem(productId) {
-    handleRemoveFromCart(productId);
+    cart.removeItem(productId);
   }
 }

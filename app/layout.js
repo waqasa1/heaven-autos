@@ -1,4 +1,5 @@
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import { CartProvider } from "@/components/store/CartProvider";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -43,7 +44,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${plusJakarta.className} bg-white text-slate-900 antialiased`}>
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

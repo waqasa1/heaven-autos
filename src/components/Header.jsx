@@ -1,11 +1,16 @@
+"use client";
+
 import { useState } from "react";
+import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
+import { AccountLink } from "./store/AccountLink";
 export const Header = ({
   cartCount,
   wishlistCount,
   activeVehicle,
   searchQuery,
   onSearchChange,
+  onSearchSubmit,
   onOpenVehicleModal,
   onOpenCart,
   onOpenWishlist,
@@ -97,7 +102,13 @@ export const Header = ({
 
         {/* Search Bar */}
         <div className="hidden md:flex flex-1 max-w-xl mx-2">
-          <div className="relative w-full">
+          <form
+            className="relative w-full"
+            onSubmit={(event) => {
+              event.preventDefault();
+              onSearchSubmit?.(searchQuery);
+            }}
+          >
             <input
               type="text"
               value={searchQuery}
@@ -122,7 +133,7 @@ export const Header = ({
                 </span>
               </span>
             )}
-          </div>
+          </form>
         </div>
 
         {/* Action Buttons */}
@@ -138,6 +149,7 @@ export const Header = ({
             </span>
             WhatsApp Support
           </a>
+          <AccountLink />
 
           {/* Mobile Vehicle Selector Icon Button */}
           <button
@@ -251,15 +263,15 @@ export const Header = ({
             >
               Car Care &amp; Chemicals
             </button>
-            <a
-              href="#ppf-studio"
+            <Link
+              href="/ppf"
               className="text-amber-600 hover:text-amber-700 transition-colors whitespace-nowrap flex items-center gap-1 font-bold"
             >
               <span className="material-symbols-outlined text-[16px]">
                 shield
               </span>
               Services (PPF &amp; Detailing)
-            </a>
+            </Link>
             <button
               onClick={onOpenTracking}
               className="text-slate-600 hover:text-sky-600 transition-colors whitespace-nowrap ml-auto font-medium flex items-center gap-1"
@@ -333,8 +345,8 @@ export const Header = ({
           >
             Car Care &amp; Microfiber Covers
           </button>
-          <a
-            href="#ppf-studio"
+          <Link
+            href="/ppf"
             onClick={() => setMobileMenuOpen(false)}
             className="text-left py-2 px-2 text-sm font-bold text-amber-600 hover:bg-amber-50 rounded flex items-center gap-2"
           >
@@ -342,7 +354,7 @@ export const Header = ({
               shield
             </span>
             PPF &amp; Detailing Studio
-          </a>
+          </Link>
           <button
             onClick={() => {
               onOpenTracking();

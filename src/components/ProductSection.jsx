@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const ProductSection = ({
   products,
   activeCategory,
@@ -205,11 +207,13 @@ export const ProductSection = ({
                     </div>
 
                     {/* Title */}
-                    <h3
-                      onClick={() => onOpenQuickView(product)}
-                      className="font-headline text-base font-bold text-slate-900 mt-1.5 line-clamp-2 hover:text-sky-600 cursor-pointer transition-colors leading-snug"
-                    >
-                      {product.name}
+                    <h3 className="font-headline text-base font-bold text-slate-900 mt-1.5 line-clamp-2 leading-snug">
+                      <Link
+                        href={`/products/${product.id.replace(/^prod-/, "")}`}
+                        className="hover:text-sky-600"
+                      >
+                        {product.name}
+                      </Link>
                     </h3>
 
                     {/* Ratings */}
